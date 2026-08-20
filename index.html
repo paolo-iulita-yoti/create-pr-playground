@@ -34,6 +34,16 @@
     </footer>
   </main>
 
+  <div id="confirm-overlay" class="modal-overlay hidden">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="confirm-title">
+      <p id="confirm-title">Are you sure you want to delete this TODO?</p>
+      <div class="modal-actions">
+        <button id="confirm-cancel" class="modal-btn">Cancel</button>
+        <button id="confirm-delete" class="modal-btn danger">Delete</button>
+      </div>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 </body>
 </html>

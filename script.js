@@ -10,6 +10,11 @@ const list = document.getElementById("todo-list");
 const itemsLeft = document.getElementById("items-left");
 const clearCompletedBtn = document.getElementById("clear-completed");
 const filterButtons = document.querySelectorAll(".filter-btn");
+const confirmOverlay = document.getElementById("confirm-overlay");
+const confirmCancelBtn = document.getElementById("confirm-cancel");
+const confirmDeleteBtn = document.getElementById("confirm-delete");
+
+let pendingDeleteId = null;
 
 function loadTodos() {
   try {
@@ -47,6 +52,16 @@ function deleteTodo(id) {
   todos = todos.filter((t) => t.id !== id);
   saveTodos();
   render();
+}
+
+function openDeleteConfirm(id) {
+  pendingDeleteId = id;
+  confirmOverlay.classList.remove("hidden");
+}
+
+function closeDeleteConfirm() {
+  pendingDeleteId = null;
+  confirmOverlay.classList.add("hidden");
 }
 
 function clearCompleted() {
@@ -96,7 +111,7 @@ function renderItem(todo) {
   deleteBtn.className = "delete-btn";
   deleteBtn.textContent = "✕";
   deleteBtn.setAttribute("aria-label", "Delete todo");
-  deleteBtn.addEventListener("click", () => deleteTodo(todo.id));
+  deleteBtn.addEventListener("click", () => openDeleteConfirm(todo.id));
 
   li.append(checkbox, span, deleteBtn);
   return li;
@@ -110,6 +125,23 @@ form.addEventListener("submit", (e) => {
 });
 
 clearCompletedBtn.addEventListener("click", clearCompleted);
+
+confirmCancelBtn.addEventListener("click", closeDeleteConfirm);
+
+confirmDeleteBtn.addEventListener("click", () => {
+  if (pendingDeleteId) deleteTodo(pendingDeleteId);
+  closeDeleteConfirm();
+});
+
+confirmOverlay.addEventListener("click", (e) => {
+  if (e.target === confirmOverlay) closeDeleteConfirm();
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !confirmOverlay.classList.contains("hidden")) {
+    closeDeleteConfirm();
+  }
+});
 
 filterButtons.forEach((btn) => {
   btn.addEventListener("click", () => {

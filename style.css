@@ -175,3 +175,61 @@ h1 {
   color: var(--danger);
   text-decoration: underline;
 }
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  z-index: 10;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal {
+  background: var(--card);
+  border-radius: 10px;
+  padding: 1.25rem;
+  width: 100%;
+  max-width: 320px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.modal p {
+  margin: 0 0 1rem;
+  font-size: 1rem;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.modal-btn {
+  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.modal-btn:hover {
+  background: var(--bg);
+}
+
+.modal-btn.danger {
+  background: var(--danger);
+  border-color: var(--danger);
+  color: white;
+}
+
+.modal-btn.danger:hover {
+  background: #dc2626;
+}
